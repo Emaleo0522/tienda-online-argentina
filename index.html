@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sara - Tienda Online Argentina</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="#" class="nav-logo">SARA</a>
+            </div>
+
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#home" class="nav-link active">Inicio</a></li>
+                    <li class="nav-item"><a href="#featured" class="nav-link">Destacados</a></li>
+                    <li class="nav-item"><a href="#new" class="nav-link">Nuevos</a></li>
+                    <li class="nav-item"><a href="#subscribed" class="nav-link">Newsletter</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <i class='bx bxs-cart nav-cart'></i>
+                <i class='bx bx-menu nav-toggle' id="nav-toggle"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="l-main">
+        <section class="home" id="home">
+            <div class="home-container bd-grid">
+                <div class="home-data">
+                    <h1 class="home-title">NUEVOS <br><span>PRODUCTOS</span></h1>
+                    <a href="#featured" class="button">IR DE COMPRAS</a>
+                </div>
+
+                <img src="https://i.postimg.cc/kg691scD/home.png" alt="image" class="home-img">
+            </div>
+        </section>
+
+        <section class="collection section">
+            <div class="collection-container bd-grid">
+                <div class="collection-box">
+                    <img src="https://i.postimg.cc/Df1KXmz4/backpack-Man.png" alt="image" class="collection-img">
+
+                    <div class="collection-data">
+                        <h2 class="collection-title"><span class="collection-subtitle">Hombres</span><br>Mochilas</h2>
+                        <a href="#" class="collection-view">Ver Colección</a>
+                    </div>
+                </div>
+
+                <div class="collection-box">
+                    <div class="collection-data">
+                        <h2 class="collection-title"><span class="collection-subtitle">Mujeres</span><br>Mochilas</h2>
+                        <a href="#" class="collection-view">Ver Colección</a>
+                    </div>
+
+                    <img src="https://i.postimg.cc/tT0MqtWS/backpack-Woman.png" alt="image" class="collection-img">
+                </div>
+            </div>
+        </section>
+
+        <section class="featured section" id="featured">
+            <h2 class="section-title">PRODUCTOS DESTACADOS</h2>
+            <a href="#" class="section-all">Ver Todos</a>
+
+            <div class="featured-container bd-grid">
+                <div class="product-card">
+                    <div class="product-card__image">
+                        <img src="https://i.postimg.cc/ydMgrWqS/feature1.png" alt="Auriculares Negro One">
+                        <div class="product-card__badge">NUEVO</div>
+                    </div>
+                    <div class="product-card__info">
+                        <h2 class="product-card__title">Auriculares Negro One</h2>
+                        <p class="product-card__description">Auriculares con calidad de sonido excepcional y comodidad superior para uso prolongado.</p>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$8.500</span>
+                            <button class="product-card__btn">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-card__image">
+                        <img src="https://i.postimg.cc/PJbx34zB/feature2.png" alt="Parlante Beats Pill">
+                        <div class="product-card__badge">NUEVO</div>
+                    </div>
+                    <div class="product-card__info">
+                        <h2 class="product-card__title">Parlante Beats Pill</h2>
+                        <p class="product-card__description">Parlante portátil con sonido potente y graves profundos. Perfecto para cualquier ocasión.</p>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$58.000</span>
+                            <button class="product-card__btn">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-card__image">
+                        <img src="https://i.postimg.cc/KvF4K6mF/feature3.png" alt="Apple AirPods">
+                        <div class="product-card__badge">NUEVO</div>
+                    </div>
+                    <div class="product-card__info">
+                        <h2 class="product-card__title">Apple AirPods</h2>
+                        <p class="product-card__description">Experiencia de audio inalámbrica premium con cancelación de ruido y calidad Apple.</p>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$36.000</span>
+                            <button class="product-card__btn">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-card__image">
+                        <img src="https://i.postimg.cc/RZp0DqKV/feature4.png" alt="Smart Watch F9 Negro">
+                        <div class="product-card__badge">NUEVO</div>
+                    </div>
+                    <div class="product-card__info">
+                        <h2 class="product-card__title">Smart Watch F9 Negro</h2>
+                        <p class="product-card__description">Reloj inteligente con múltiples funciones de salud y notificaciones. Diseño elegante y moderno.</p>
+                        <div class="product-card__price-row">
+                            <span class="product-card__price">$29.000</span>
+                            <button class="product-card__btn">Agregar al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </section>
+
+        <section class="offer section">
+            <div class="offer-bg">
+                <div class="offer-data">
+                    <h2 class="offer-title">Oferta Especial</h2>
+                    <p class="offer-description">Descuentos especiales para mujeres solo esta semana</p>
+
+                    <a href="#" class="button">COMPRAR AHORA</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="new section" id="new">
+            <h2 class="section-title">NUEVOS PRODUCTOS</h2>
+            <a href="#" class="section-all">Ver Todos</a>
+
+            <div class="new-container bd-grid">
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/Hs5KNNMJ/new1.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/sXq66PD9/new2.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/rs4hvdD6/new3.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/sDFH5JL3/new4.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/Bnph9fnv/new5.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+
+                <div class="new-box">
+                    <img src="https://i.postimg.cc/SKtDRL8F/new6.png" alt="new image" class="new-img">
+
+                    <div class="new-link">
+                        <a href="#" class="button">VER PRODUCTO</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter section" id="subscribed">
+            <div class="newsletter-container bd-grid">
+                <div class="newsletter-subscribe">
+                    <div class="certification-badge">
+                        <div class="checkmark">
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark_ok" height="19" viewBox="0 0 19 19" width="19" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z" fill="#e65c4d">
+                            </svg>
+                            <svg class="checkmark__check" height="36" viewBox="0 0 48 36" width="48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M47.248 3.9L43.906.667a2.428 2.428 0 0 0-3.344 0l-23.63 23.09-9.554-9.338a2.432 2.432 0 0 0-3.345 0L.692 17.654a2.236 2.236 0 0 0 .002 3.233l14.567 14.175c.926.894 2.42.894 3.342.01L47.248 7.128c.922-.89.922-2.34 0-3.23" fill="#fff">
+                            </svg>
+                            <svg class="checkmark__back" height="115" viewBox="0 0 120 115" width="120" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M107.332 72.938c-1.798 5.557 4.564 15.334 1.21 19.96-3.387 4.674-14.646 1.605-19.298 5.003-4.61 3.368-5.163 15.074-10.695 16.878-5.344 1.743-12.628-7.35-18.545-7.35-5.922 0-13.206 9.088-18.543 7.345-5.538-1.804-6.09-13.515-10.696-16.877-4.657-3.398-15.91-.334-19.297-5.002-3.356-4.627 3.006-14.404 1.208-19.962C10.93 67.576 0 63.442 0 57.5c0-5.943 10.93-10.076 12.668-15.438 1.798-5.557-4.564-15.334-1.21-19.96 3.387-4.674 14.646-1.605 19.298-5.003C35.366 13.73 35.92 2.025 41.45.22c5.344-1.743 12.628 7.35 18.545 7.35 5.922 0 13.206-9.088 18.543-7.345 5.538 1.804 6.09 13.515 10.696 16.877 4.657 3.398 15.91.334 19.297 5.002 3.356 4.627-3.006 14.404-1.208 19.962C109.07 47.424 120 51.562 120 57.5c0 5.943-10.93 10.076-12.668 15.438z" fill="#e65c4d">
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title">NEWSLETTER CERTIFICADO</h2>
+                    <p class="newsletter-description">Promociones exclusivas, noticias de productos y ventas especiales. Calidad garantizada directo a vos</p>
+
+                    <form action="" class="newsletter-form">
+                        <input type="text" class="newsletter-input" placeholder="Ingresá tu email">
+                        <a href="#" class="button">SUSCRIBIRSE</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="sponsors section">
+            <div class="sponsors-container bd-grid">
+                <div class="sponsors-logo">
+                    <img src="https://i.postimg.cc/3Jv5TRsx/logo1.png" alt="image logo">
+                </div>
+
+                <div class="sponsors-logo">
+                    <img src="https://i.postimg.cc/bJBWXcLn/logo2.png" alt="image logo">
+                </div>
+
+                <div class="sponsors-logo">
+                    <img src="https://i.postimg.cc/J0HgM6d2/logo3.png" alt="image logo">
+                </div>
+
+                <div class="sponsors-logo">
+                    <img src="https://i.postimg.cc/xjkTX9wW/logo4.png" alt="image logo">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer section">
+        <div class="footer-container bd-grid">
+            <div class="footer-box">
+                <h3 class="footer-title">SARA</h3>
+                <p class="footer-deal">Tienda de Productos</p>
+
+                <a href="#"><img src="https://i.postimg.cc/sgtFn03x/footerstore1.png" alt="image" class="footer-store"></a>
+                <a href="#"><img src="https://i.postimg.cc/pd8w3YdZ/footerstore2.png" alt="image" class="footer-store"></a>
+            </div>
+
+            <div class="footer-box">
+                <h3 class="footer-title">EXPLORAR</h3>
+
+                <ul>
+                    <li><a href="#" class="footer-link">Inicio</a></li>
+                    <li><a href="#" class="footer-link">Destacados</a></li>
+                    <li><a href="#" class="footer-link">Nuevos</a></li>
+                    <li><a href="#" class="footer-link">Newsletter</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box">
+                <h3 class="footer-title">NUESTROS SERVICIOS</h3>
+
+                <ul>
+                    <li><a href="#" class="footer-link">Precios</a></li>
+                    <li><a href="#" class="footer-link">Envío Gratis</a></li>
+                    <li><a href="#" class="footer-link">Gift Cards</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box">
+                <h3 class="footer-title">SEGUINOS</h3>
+
+                <a href="#" class="footer-social"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="footer-social"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="footer-social"><i class='bx bxl-youtube'></i></a>
+            </div>
+        </div>
+
+        <p class="footer-copy">&#169; 2024 Copyright Todos los derechos reservados</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
