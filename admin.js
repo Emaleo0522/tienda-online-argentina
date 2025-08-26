@@ -1,6 +1,7 @@
 // Estado global de la aplicación
 let currentSection = 'featured';
 let currentEditingProduct = null;
+let currentImageData = null;
 let products = {
     featured: [
         {
@@ -193,6 +194,7 @@ function addProduct(section) {
     
     // Limpiar formulario
     document.getElementById('product-form').reset();
+    clearImagePreview();
     
     // Mostrar modal
     document.getElementById('product-modal').classList.add('active');
@@ -221,8 +223,13 @@ function editProduct(section, productId) {
     document.getElementById('product-name').value = product.name;
     document.getElementById('product-price').value = product.price || '';
     document.getElementById('product-description').value = product.description || '';
-    document.getElementById('product-image').value = product.image;
+    document.getElementById('product-image-url').value = product.image;
     document.getElementById('product-badge').value = product.badge || '';
+    
+    // Mostrar preview de imagen existente si es URL
+    if (product.image && product.image.startsWith('http')) {
+        showImagePreview(product.image);
+    }
     
     // Mostrar modal
     document.getElementById('product-modal').classList.add('active');
@@ -244,8 +251,11 @@ function saveProduct() {
     const name = document.getElementById('product-name').value.trim();
     const price = document.getElementById('product-price').value.trim();
     const description = document.getElementById('product-description').value.trim();
-    const image = document.getElementById('product-image').value.trim();
+    const imageUrl = document.getElementById('product-image-url').value.trim();
     const badge = document.getElementById('product-badge').value.trim();
+    
+    // Usar imagen subida o URL
+    const image = currentImageData || imageUrl;
     
     if (!name || !image) {
         alert('El nombre y la imagen son obligatorios');
@@ -290,6 +300,8 @@ function saveProduct() {
 function closeModal() {
     document.getElementById('product-modal').classList.remove('active');
     currentEditingProduct = null;
+    currentImageData = null;
+    clearImagePreview();
 }
 
 // Configuración de la tienda
@@ -376,3 +388,108 @@ document.getElementById('product-modal').addEventListener('click', function(e) {
         closeModal();
     }
 });
+
+// ===== FUNCIONES DE MANEJO DE IMÁGENES =====
+
+function triggerFileUpload() {
+    document.getElementById('product-image-file').click();
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+        alert('Por favor seleccioná un archivo de imagen válido');
+        return;
+    }
+
+    // Validar tamaño (máximo 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('El archivo es muy grande. El tamaño máximo es 5MB');
+        return;
+    }
+
+    // Leer archivo como base64
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        currentImageData = e.target.result;
+        showImagePreview(currentImageData);
+        
+        // Limpiar URL si se sube archivo
+        document.getElementById('product-image-url').value = '';
+    };
+    reader.readAsDataURL(file);
+}
+
+function showImagePreview(imageSrc) {
+    const preview = document.getElementById('image-preview');
+    const previewImg = document.getElementById('preview-img');
+    
+    previewImg.src = imageSrc;
+    preview.style.display = 'block';
+}
+
+function removeImage() {
+    clearImagePreview();
+    currentImageData = null;
+    document.getElementById('product-image-file').value = '';
+    document.getElementById('product-image-url').value = '';
+}
+
+function clearImagePreview() {
+    const preview = document.getElementById('image-preview');
+    const previewImg = document.getElementById('preview-img');
+    
+    preview.style.display = 'none';
+    previewImg.src = '';
+}
+
+// Drag and drop para imágenes
+const uploadContainer = document.querySelector('.image-upload-container');
+
+if (uploadContainer) {
+    uploadContainer.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadContainer.classList.add('image-upload-drag');
+    });
+
+    uploadContainer.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadContainer.classList.remove('image-upload-drag');
+    });
+
+    uploadContainer.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadContainer.classList.remove('image-upload-drag');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            
+            // Simular selección de archivo
+            const fileInput = document.getElementById('product-image-file');
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            
+            // Procesar archivo
+            handleImageUpload({ target: { files: [file] } });
+        }
+    });
+}
+
+// Listener para URL de imagen
+document.getElementById('product-image-url').addEventListener('input', function(e) {
+    const url = e.target.value.trim();
+    if (url && isValidImageUrl(url)) {
+        currentImageData = null; // Limpiar imagen subida
+        showImagePreview(url);
+        document.getElementById('product-image-file').value = ''; // Limpiar archivo
+    }
+});
+
+function isValidImageUrl(url) {
+    return url.match(/\.(jpeg|jpg|gif|png|webp)$/) != null || url.startsWith('data:image/');
+}

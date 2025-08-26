@@ -143,9 +143,24 @@
                         <textarea id="product-description" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="product-image">URL de la Imagen</label>
-                        <input type="url" id="product-image" required>
-                        <small>Pegá aquí la URL de la imagen del producto</small>
+                        <label for="product-image">Imagen del Producto</label>
+                        <div class="image-upload-container">
+                            <div class="upload-options">
+                                <button type="button" class="btn-upload" onclick="triggerFileUpload()">
+                                    <i class='bx bx-upload'></i> Subir Imagen
+                                </button>
+                                <span class="upload-separator">o</span>
+                                <input type="url" id="product-image-url" placeholder="Pegá URL de imagen">
+                            </div>
+                            <input type="file" id="product-image-file" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                            <div class="image-preview" id="image-preview" style="display: none;">
+                                <img id="preview-img" src="" alt="Vista previa">
+                                <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                    <i class='bx bx-x'></i>
+                                </button>
+                            </div>
+                        </div>
+                        <small>Subí una imagen (.png, .jpg, .webp) o pegá una URL</small>
                     </div>
                     <div class="form-group">
                         <label for="product-badge">Etiqueta (opcional)</label>
