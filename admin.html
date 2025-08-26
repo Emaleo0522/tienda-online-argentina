@@ -36,6 +36,10 @@
                     <i class='bx bx-plus-circle'></i>
                     <span>Nuevos Productos</span>
                 </button>
+                <button class="nav-item" data-section="stories">
+                    <i class='bx bxl-instagram'></i>
+                    <span>Instagram Stories</span>
+                </button>
                 <button class="nav-item" data-section="newsletter">
                     <i class='bx bx-envelope'></i>
                     <span>Newsletter</span>
@@ -57,6 +61,18 @@
                         <i class='bx bx-plus'></i> Agregar Producto
                     </button>
                 </div>
+                
+                <div class="section-tips">
+                    <h4><i class='bx bx-lightbulb'></i> Recomendaciones para Productos Destacados</h4>
+                    <ul>
+                        <li><strong>Cantidad ideal:</strong> Entre 3-6 productos para no sobrecargar</li>
+                        <li><strong>Precio:</strong> Incluí siempre el precio en pesos argentinos (ej: $15.900)</li>
+                        <li><strong>Descripción:</strong> Máximo 2 líneas, destacá lo más importante del producto</li>
+                        <li><strong>Imágenes:</strong> Usá fotos cuadradas (1:1) con fondo blanco o transparente</li>
+                        <li><strong>Badge "NUEVO":</strong> Solo para productos lanzados en los últimos 30 días</li>
+                    </ul>
+                </div>
+                
                 <div class="products-grid" id="featured-products">
                     <!-- Los productos se cargarán aquí dinámicamente -->
                 </div>
@@ -70,8 +86,46 @@
                         <i class='bx bx-plus'></i> Agregar Producto
                     </button>
                 </div>
+                
+                <div class="section-tips">
+                    <h4><i class='bx bx-lightbulb'></i> Recomendaciones para Nuevos Productos</h4>
+                    <ul>
+                        <li><strong>Cantidad ideal:</strong> Máximo 6 productos, actualizá regularmente</li>
+                        <li><strong>Solo nombre:</strong> No necesitás precio ni descripción, solo el nombre del producto</li>
+                        <li><strong>Imágenes:</strong> Usá fotos cuadradas de alta calidad que llamen la atención</li>
+                        <li><strong>Renovación:</strong> Cambiá estos productos cada 2-4 semanas para mantener fresco el sitio</li>
+                        <li><strong>Orden:</strong> Los primeros que agregues se muestran primero en el sitio</li>
+                    </ul>
+                </div>
+                
                 <div class="products-grid" id="new-products">
                     <!-- Los productos se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Instagram Stories -->
+            <div class="content-section" id="stories-section">
+                <div class="section-header">
+                    <h2>Instagram Stories</h2>
+                    <button class="btn-add" onclick="addStory()">
+                        <i class='bx bx-plus'></i> Agregar Historia
+                    </button>
+                </div>
+                
+                <div class="section-tips">
+                    <h4><i class='bx bx-lightbulb'></i> Recomendaciones para Instagram Stories</h4>
+                    <ul>
+                        <li><strong>Formato ideal:</strong> Imágenes verticales 9:16 (como las stories de Instagram)</li>
+                        <li><strong>Resolución:</strong> 1080x1920px para mejor calidad</li>
+                        <li><strong>Contenido:</strong> Capturas de tus stories reales, promociones, productos destacados</li>
+                        <li><strong>Cantidad:</strong> Máximo 5 historias, menos es más efectivo</li>
+                        <li><strong>Actualización:</strong> Cambiá cada 1-2 semanas para mantener contenido fresco</li>
+                        <li><strong>Orden:</strong> La primera historia se muestra primero en el visor del sitio</li>
+                    </ul>
+                </div>
+                
+                <div class="stories-grid" id="stories-container">
+                    <!-- Las stories se cargarán aquí dinámicamente -->
                 </div>
             </div>
 
@@ -80,6 +134,18 @@
                 <div class="section-header">
                     <h2>Newsletter</h2>
                 </div>
+                
+                <div class="section-tips">
+                    <h4><i class='bx bx-lightbulb'></i> Recomendaciones para Newsletter</h4>
+                    <ul>
+                        <li><strong>Título llamativo:</strong> Usá palabras como "EXCLUSIVO", "CERTIFICADO", "VIP"</li>
+                        <li><strong>Descripción clara:</strong> Explicá qué beneficios obtiene el cliente</li>
+                        <li><strong>Incentivos:</strong> Mencioná descuentos, primicias, contenido exclusivo</li>
+                        <li><strong>Confianza:</strong> Palabras como "calidad garantizada", "directo a vos" generan credibilidad</li>
+                        <li><strong>Ejemplo:</strong> "NEWSLETTER VIP - Descuentos exclusivos y nuevos productos antes que nadie"</li>
+                    </ul>
+                </div>
+                
                 <div class="form-card">
                     <div class="form-group">
                         <label for="newsletter-title">Título</label>
@@ -97,6 +163,19 @@
                 <div class="section-header">
                     <h2>Información de la Tienda</h2>
                 </div>
+                
+                <div class="section-tips">
+                    <h4><i class='bx bx-lightbulb'></i> Recomendaciones para Información de la Tienda</h4>
+                    <ul>
+                        <li><strong>Nombre de la tienda:</strong> Corto y memorable, máximo 8 caracteres</li>
+                        <li><strong>Descripción:</strong> Define tu nicho (ej: "Tecnología Premium", "Accesorios Únicos")</li>
+                        <li><strong>Título principal:</strong> Debe generar acción, usá mayúsculas para impacto</li>
+                        <li><strong>Botón principal:</strong> Frases de acción como "COMPRAR AHORA", "VER CATÁLOGO", "EXPLORAR"</li>
+                        <li><strong>Coherencia:</strong> Mantené el mismo estilo en todo el sitio</li>
+                        <li><strong>No olvides:</strong> Hacer clic en "Guardar Cambios" para aplicar los cambios</li>
+                    </ul>
+                </div>
+                
                 <div class="form-card">
                     <div class="form-group">
                         <label for="store-name">Nombre de la Tienda</label>
@@ -171,6 +250,49 @@
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
                 <button type="submit" class="btn-primary" onclick="saveProduct()">Guardar Producto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Instagram Stories -->
+    <div class="story-modal" id="story-modal">
+        <div class="story-modal-content">
+            <div class="story-modal-header">
+                <h3 id="story-modal-title">Agregar Historia</h3>
+                <button class="btn-close" onclick="closeStoryModal()">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            
+            <div class="story-modal-body">
+                <form id="story-form">
+                    <div class="story-upload-area" id="story-upload-area">
+                        <div class="story-upload-content">
+                            <i class='bx bx-image-add'></i>
+                            <p>Arrastrá tu imagen aquí o hace clic para seleccionar</p>
+                            <p><small>Formato recomendado: 9:16 (vertical)</small></p>
+                            <button type="button" class="story-upload-btn" onclick="triggerStoryUpload()">
+                                Seleccionar Imagen
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <input type="file" id="story-image-file" accept="image/*" style="display: none;">
+                    
+                    <div id="story-preview-container" style="display: none;">
+                        <div class="story-preview-modal">
+                            <img id="story-preview-img" src="" alt="Preview">
+                        </div>
+                        <button type="button" class="btn-cancel" onclick="removeStoryImage()" style="width: 100%; margin-top: 1rem;">
+                            <i class='bx bx-trash'></i> Remover Imagen
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="story-modal-footer">
+                <button class="btn-cancel" onclick="closeStoryModal()">Cancelar</button>
+                <button class="btn-primary" onclick="saveStory()">Guardar Historia</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 // Estado global de la aplicación
 let currentSection = 'featured';
 let currentEditingProduct = null;
+let currentEditingStory = null;
 let currentImageData = null;
+let currentStoryImageData = null;
 let products = {
     featured: [
         {
@@ -77,6 +79,24 @@ let products = {
     ]
 };
 
+let stories = [
+    {
+        id: 1,
+        image: 'https://i.postimg.cc/ydMgrWqS/feature1.png',
+        order: 1
+    },
+    {
+        id: 2,
+        image: 'https://i.postimg.cc/PJbx34zB/feature2.png',
+        order: 2
+    },
+    {
+        id: 3,
+        image: 'https://i.postimg.cc/KvF4K6mF/feature3.png',
+        order: 3
+    }
+];
+
 let storeSettings = {
     name: 'SARA',
     description: 'Tienda de Productos',
@@ -122,6 +142,8 @@ function switchSection(section) {
     
     if (section === 'featured' || section === 'new') {
         renderProducts(section);
+    } else if (section === 'stories') {
+        renderStories();
     }
 }
 
@@ -172,7 +194,54 @@ function renderProducts(section) {
 function renderCurrentSection() {
     if (currentSection === 'featured' || currentSection === 'new') {
         renderProducts(currentSection);
+    } else if (currentSection === 'stories') {
+        renderStories();
     }
+}
+
+// Renderizar Instagram Stories
+function renderStories() {
+    const container = document.getElementById('stories-container');
+    const sortedStories = stories.sort((a, b) => a.order - b.order);
+    
+    if (sortedStories.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1;">
+                <i class='bx bxl-instagram'></i>
+                <h3>No hay historias</h3>
+                <p>Agregá tu primera historia haciendo clic en "Agregar Historia"</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = sortedStories.map(story => `
+        <div class="story-card">
+            <div class="story-header">
+                <div class="story-number">${story.order}</div>
+                <div class="story-actions">
+                    <button class="btn-edit" onclick="editStory(${story.id})" title="Editar">
+                        <i class='bx bx-edit'></i>
+                    </button>
+                    <button class="btn-delete" onclick="deleteStory(${story.id})" title="Eliminar">
+                        <i class='bx bx-trash'></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="story-preview">
+                ${story.image ? 
+                    `<img src="${story.image}" alt="Historia ${story.order}">` :
+                    `<div class="story-preview-empty">
+                        <i class='bx bx-image'></i>
+                        <span>Sin imagen</span>
+                    </div>`
+                }
+            </div>
+            
+            <div class="story-description">Historia ${story.order}</div>
+        </div>
+    `).join('');
 }
 
 // CRUD de productos
@@ -329,11 +398,13 @@ function saveStoreSettings() {
 function saveToStorage() {
     localStorage.setItem('saraAdminProducts', JSON.stringify(products));
     localStorage.setItem('saraAdminSettings', JSON.stringify(storeSettings));
+    localStorage.setItem('saraAdminStories', JSON.stringify(stories));
 }
 
 function loadFromStorage() {
     const storedProducts = localStorage.getItem('saraAdminProducts');
     const storedSettings = localStorage.getItem('saraAdminSettings');
+    const storedStories = localStorage.getItem('saraAdminStories');
     
     if (storedProducts) {
         products = JSON.parse(storedProducts);
@@ -341,6 +412,10 @@ function loadFromStorage() {
     
     if (storedSettings) {
         storeSettings = JSON.parse(storedSettings);
+    }
+    
+    if (storedStories) {
+        stories = JSON.parse(storedStories);
     }
 }
 
@@ -358,7 +433,8 @@ function updateMainSite() {
     // Por ahora solo guarda en localStorage para que lo lea la tienda
     localStorage.setItem('saraStoreData', JSON.stringify({
         products,
-        settings: storeSettings
+        settings: storeSettings,
+        stories
     }));
 }
 
@@ -493,3 +569,186 @@ document.getElementById('product-image-url').addEventListener('input', function(
 function isValidImageUrl(url) {
     return url.match(/\.(jpeg|jpg|gif|png|webp)$/) != null || url.startsWith('data:image/');
 }
+
+// ===== INSTAGRAM STORIES MANAGEMENT =====
+
+function addStory() {
+    if (stories.length >= 5) {
+        alert('Solo podés tener máximo 5 historias');
+        return;
+    }
+    
+    currentEditingStory = null;
+    document.getElementById('story-modal-title').textContent = 'Agregar Historia';
+    resetStoryForm();
+    document.getElementById('story-modal').classList.add('active');
+}
+
+function editStory(storyId) {
+    const story = stories.find(s => s.id === storyId);
+    if (!story) return;
+    
+    currentEditingStory = storyId;
+    document.getElementById('story-modal-title').textContent = 'Editar Historia';
+    
+    if (story.image) {
+        showStoryPreview(story.image);
+        currentStoryImageData = story.image;
+    }
+    
+    document.getElementById('story-modal').classList.add('active');
+}
+
+function deleteStory(storyId) {
+    if (confirm('¿Estás segura de que querés eliminar esta historia?')) {
+        stories = stories.filter(s => s.id !== storyId);
+        reorderStories();
+        renderStories();
+        saveToStorage();
+        updateMainSite();
+        showToast('Historia eliminada correctamente');
+    }
+}
+
+function closeStoryModal() {
+    document.getElementById('story-modal').classList.remove('active');
+    currentEditingStory = null;
+    currentStoryImageData = null;
+    resetStoryForm();
+}
+
+function resetStoryForm() {
+    document.getElementById('story-preview-container').style.display = 'none';
+    document.getElementById('story-upload-area').style.display = 'block';
+    document.getElementById('story-image-file').value = '';
+    currentStoryImageData = null;
+}
+
+function saveStory() {
+    if (!currentStoryImageData) {
+        alert('Debés seleccionar una imagen para la historia');
+        return;
+    }
+    
+    if (currentEditingStory) {
+        // Editar historia existente
+        const storyIndex = stories.findIndex(s => s.id === currentEditingStory);
+        if (storyIndex !== -1) {
+            stories[storyIndex].image = currentStoryImageData;
+        }
+        showToast('Historia actualizada correctamente');
+    } else {
+        // Agregar nueva historia
+        const newId = Math.max(0, ...stories.map(s => s.id)) + 1;
+        const newOrder = stories.length + 1;
+        
+        stories.push({
+            id: newId,
+            image: currentStoryImageData,
+            order: newOrder
+        });
+        showToast('Historia agregada correctamente');
+    }
+    
+    renderStories();
+    closeStoryModal();
+    saveToStorage();
+    updateMainSite();
+}
+
+function reorderStories() {
+    stories = stories.map((story, index) => ({
+        ...story,
+        order: index + 1
+    }));
+}
+
+// Funciones de upload para stories
+function triggerStoryUpload() {
+    document.getElementById('story-image-file').click();
+}
+
+function handleStoryImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+        alert('Por favor seleccioná un archivo de imagen válido');
+        return;
+    }
+
+    // Validar tamaño (máximo 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('El archivo es muy grande. El tamaño máximo es 5MB');
+        return;
+    }
+
+    // Leer archivo como base64
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        currentStoryImageData = e.target.result;
+        showStoryPreview(currentStoryImageData);
+    };
+    reader.readAsDataURL(file);
+}
+
+function showStoryPreview(imageSrc) {
+    const previewContainer = document.getElementById('story-preview-container');
+    const previewImg = document.getElementById('story-preview-img');
+    const uploadArea = document.getElementById('story-upload-area');
+    
+    previewImg.src = imageSrc;
+    previewContainer.style.display = 'block';
+    uploadArea.style.display = 'none';
+}
+
+function removeStoryImage() {
+    resetStoryForm();
+    currentStoryImageData = null;
+}
+
+// Event listeners adicionales para stories
+document.addEventListener('DOMContentLoaded', function() {
+    const storyFileInput = document.getElementById('story-image-file');
+    if (storyFileInput) {
+        storyFileInput.addEventListener('change', handleStoryImageUpload);
+    }
+    
+    // Drag and drop para stories
+    const storyUploadArea = document.getElementById('story-upload-area');
+    if (storyUploadArea) {
+        storyUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            storyUploadArea.classList.add('dragover');
+        });
+
+        storyUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            storyUploadArea.classList.remove('dragover');
+        });
+
+        storyUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            storyUploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                handleStoryImageUpload({ target: { files: [file] } });
+            }
+        });
+        
+        storyUploadArea.addEventListener('click', triggerStoryUpload);
+    }
+    
+    // Cerrar modal con click fuera
+    const storyModal = document.getElementById('story-modal');
+    if (storyModal) {
+        storyModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeStoryModal();
+            }
+        });
+    }
+});

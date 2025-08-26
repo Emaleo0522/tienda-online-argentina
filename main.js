@@ -162,6 +162,39 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleActions: "play none none reverse"
         }
     });
+
+    // Animación para Instagram Stories
+    gsap.fromTo(".text-content", {
+        opacity: 0,
+        x: -50
+    }, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".instagram-stories",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    gsap.fromTo(".slide", {
+        opacity: 0,
+        x: 50,
+        scale: 0.8
+    }, {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        duration: 1,
+        ease: "back.out(1.2)",
+        scrollTrigger: {
+            trigger: ".instagram-stories",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
 });
 
 // ===== WHATSAPP BUTTON FUNCTIONALITY =====
@@ -295,3 +328,161 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// ===== INSTAGRAM STORIES SLIDER =====
+class SlideStories {
+    constructor(id) {
+        this.slide = document.querySelector(`[data-slide=${id}]`);
+        if (!this.slide) return;
+        this.active = 0;
+        this.init();
+    }
+
+    activeSlide(index) {
+        this.active = index;
+        this.items.forEach((item) => {
+            item.classList.remove("active");
+        });
+        this.items[index].classList.add("active");
+        this.thumbItems.forEach((item) => {
+            item.classList.remove("active");
+            item.classList.remove("done");
+        });
+        
+        // Marcar como completados los anteriores
+        for(let i = 0; i < index; i++) {
+            this.thumbItems[i].classList.add("done");
+        }
+        
+        this.thumbItems[index].classList.add("active");
+        this.autoSlide();
+    }
+
+    prev() {
+        if (this.active > 0) {
+            this.activeSlide(this.active - 1);
+        } else {
+            this.activeSlide(this.items.length - 1);
+        }
+    }
+
+    next() {
+        if (this.active < this.items.length - 1) {
+            this.activeSlide(this.active + 1);
+        } else {
+            this.activeSlide(0);
+        }
+    }
+
+    addNavigation() {
+        const nextBtn = this.slide.querySelector(".slide-next");
+        const prevBtn = this.slide.querySelector(".slide-prev");
+        if (nextBtn && prevBtn) {
+            nextBtn.addEventListener("click", this.next);
+            prevBtn.addEventListener("click", this.prev);
+        }
+    }
+
+    addThumbItems() {
+        this.items.forEach(() => (this.thumb.innerHTML += `<span></span>`));
+        this.thumbItems = Array.from(this.thumb.children);
+    }
+
+    autoSlide() {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(this.next, 5000);
+    }
+
+    init() {
+        this.next = this.next.bind(this);
+        this.prev = this.prev.bind(this);
+        this.thumb = this.slide.querySelector(".slide-thumb");
+        this.refresh();
+        this.addNavigation();
+    }
+    
+    refresh() {
+        // Limpiar timeout anterior
+        clearTimeout(this.timeout);
+        
+        // Actualizar elementos
+        this.items = this.slide.querySelectorAll(".slide-items > *");
+        
+        if (this.thumb && this.items.length > 0) {
+            // Limpiar thumbs anteriores
+            this.thumb.innerHTML = '';
+            
+            // Recrear thumbs
+            this.addThumbItems();
+            
+            // Resetear estado
+            this.active = 0;
+            this.activeSlide(0);
+        }
+    }
+}
+
+// Variable global para el slider
+let storiesSlider = null;
+
+// Inicializar slider cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    loadStoriesFromAdmin();
+});
+
+// Cargar stories desde el admin
+function loadStoriesFromAdmin() {
+    const storeData = localStorage.getItem('saraStoreData');
+    if (storeData) {
+        const data = JSON.parse(storeData);
+        if (data.stories && data.stories.length > 0) {
+            updateStoriesInDOM(data.stories);
+        }
+    }
+    
+    // Inicializar el slider después de cargar las stories
+    setTimeout(() => {
+        if (storiesSlider) {
+            storiesSlider.refresh();
+        } else {
+            storiesSlider = new SlideStories("slide");
+        }
+    }, 100);
+}
+
+// Escuchar cambios en localStorage para actualizar en tiempo real
+window.addEventListener('storage', function(e) {
+    if (e.key === 'saraStoreData') {
+        loadStoriesFromAdmin();
+    }
+});
+
+// Función para refrescar stories manualmente (llamada desde admin)
+function refreshStoriesFromAdmin() {
+    loadStoriesFromAdmin();
+}
+
+// Actualizar las stories en el DOM
+function updateStoriesInDOM(stories) {
+    const slideItems = document.querySelector('.slide-items');
+    if (!slideItems) return;
+    
+    // Ordenar stories por order
+    const sortedStories = stories.sort((a, b) => a.order - b.order);
+    
+    // Limpiar contenido actual
+    slideItems.innerHTML = '';
+    
+    // Agregar las nuevas stories
+    sortedStories.forEach((story, index) => {
+        const img = document.createElement('img');
+        img.src = story.image;
+        img.alt = `Historia ${index + 1}`;
+        img.onerror = function() {
+            console.log('Error cargando imagen:', story.image);
+        };
+        slideItems.appendChild(img);
+    });
+    
+    console.log(`Actualizadas ${sortedStories.length} stories en el DOM`);
+}

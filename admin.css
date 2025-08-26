@@ -625,3 +625,282 @@ small {
         flex-direction: column;
     }
 }
+
+/* ===== SECTION TIPS ===== */
+.section-tips {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFECD1 100%);
+    border: 1px solid #FED7AA;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.section-tips h4 {
+    color: #EA580C;
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-tips h4 i {
+    font-size: 1.25rem;
+}
+
+.section-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-tips li {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    border-left: 3px solid #EA580C;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.section-tips li:last-child {
+    margin-bottom: 0;
+}
+
+.section-tips strong {
+    color: #EA580C;
+}
+
+@media (max-width: 768px) {
+    .section-tips {
+        padding: 1rem;
+    }
+    
+    .section-tips h4 {
+        font-size: 0.9rem;
+    }
+    
+    .section-tips li {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== INSTAGRAM STORIES ADMIN ===== */
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.story-card {
+    background: var(--white-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.story-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.story-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.story-number {
+    background: var(--primary-color);
+    color: var(--white-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: var(--font-bold);
+}
+
+.story-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.story-preview {
+    width: 100%;
+    height: 250px;
+    background: var(--gray-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.story-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-preview-empty {
+    color: var(--dark-light);
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.story-preview-empty i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.story-description {
+    color: var(--dark-light);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* Story Modal */
+.story-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.story-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.story-modal-content {
+    background: var(--white-color);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.story-modal.active .story-modal-content {
+    transform: scale(1);
+}
+
+.story-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.story-modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: var(--font-bold);
+}
+
+.story-modal-body {
+    padding: 1.5rem;
+}
+
+.story-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+/* Story Image Upload */
+.story-upload-area {
+    border: 2px dashed #D1D5DB;
+    border-radius: var(--border-radius);
+    padding: 2rem 1rem;
+    text-align: center;
+    transition: border-color 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+.story-upload-area:hover {
+    border-color: var(--primary-color);
+}
+
+.story-upload-area.dragover {
+    border-color: var(--primary-color);
+    background-color: rgba(229, 89, 71, 0.05);
+}
+
+.story-upload-content {
+    color: var(--dark-light);
+}
+
+.story-upload-content i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.story-upload-btn {
+    background: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: var(--font-semi);
+    margin-top: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.story-upload-btn:hover {
+    background: var(--primary-alt);
+}
+
+.story-preview-modal {
+    max-width: 200px;
+    max-height: 300px;
+    margin: 0 auto 1rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.story-preview-modal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .story-modal-content {
+        width: 95%;
+        max-width: none;
+    }
+}
