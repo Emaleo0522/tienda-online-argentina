@@ -90,4 +90,76 @@ document.addEventListener('DOMContentLoaded', function() {
         duration: 0.8,
         ease: "power2.out"
     });
+
+    // Animaciones GSAP para productos destacados al hacer scroll
+    gsap.registerPlugin(ScrollTrigger);
+    
+    gsap.fromTo(".product-card", {
+        opacity: 0,
+        y: 50,
+        scale: 0.9
+    }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.2,
+        scrollTrigger: {
+            trigger: ".featured-container",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Animación para la sección de ofertas
+    gsap.fromTo(".offer-data", {
+        opacity: 0,
+        scale: 0.8
+    }, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".offer",
+            start: "top 75%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Animación para nuevos productos
+    gsap.fromTo(".new-box", {
+        opacity: 0,
+        y: 30
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.15,
+        scrollTrigger: {
+            trigger: ".new-container",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Animación para el newsletter/certificación
+    gsap.fromTo(".certification-badge", {
+        opacity: 0,
+        scale: 0,
+        rotation: -45
+    }, {
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+        duration: 1.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: ".newsletter",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
 });
