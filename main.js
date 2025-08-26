@@ -163,3 +163,135 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// ===== WHATSAPP BUTTON FUNCTIONALITY =====
+
+// Número de WhatsApp de la tienda (cambiar por el número real)
+const WHATSAPP_NUMBER = '5491123456789'; // Formato: 54 + código área + número
+
+// Máscara para teléfono argentino
+function phoneMask(value) {
+    if (!value) return '';
+    value = value.replace(/\D/g,'');
+    
+    // Formato argentino: (11) 1234-5678 o (011) 1234-5678
+    if (value.length <= 2) {
+        return value;
+    } else if (value.length <= 4) {
+        return `(${value.slice(0, 2)}) ${value.slice(2)}`;
+    } else if (value.length <= 8) {
+        return `(${value.slice(0, 2)}) ${value.slice(2, 6)}-${value.slice(6)}`;
+    } else {
+        return `(${value.slice(0, 3)}) ${value.slice(3, 7)}-${value.slice(7, 11)}`;
+    }
+}
+
+// Función para obtener datos del formulario
+function getData(form) {
+    var formData = new FormData(form);
+    return Object.fromEntries(formData);
+}
+
+// Inicializar funcionalidad de WhatsApp
+document.addEventListener('DOMContentLoaded', function() {
+    const wppButton = document.getElementById('wpp-link');
+    const wppForm = document.getElementById('wpp-form');
+    const closeButton = document.getElementById('close-bt');
+    const phone = document.getElementById('telefono');
+    const mask = document.querySelector('#wpp-fix .mask');
+    const response = document.querySelector('#wpp-form .response-output');
+
+    // Aplicar máscara al teléfono
+    if (phone) {
+        phone.addEventListener('keyup', function(e) {
+            phone.value = phoneMask(e.target.value);
+        });
+    }
+
+    // Abrir formulario
+    if (wppButton) {
+        wppButton.addEventListener('click', function() {
+            wppButton.classList.add('hide-this');
+        });
+    }
+
+    // Cerrar formulario con máscara
+    if (mask) {
+        mask.addEventListener('click', function() {
+            wppButton.classList.remove('hide-this');
+        });
+    }
+
+    // Cerrar formulario con botón X
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            wppButton.classList.remove('hide-this');
+        });
+    }
+
+    // Manejar envío del formulario
+    if (wppForm) {
+        wppForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = getData(e.target);
+            
+            // Validar campos
+            if (!formData.nombre || !formData.telefono || !formData.email) {
+                alert('Por favor completá todos los campos');
+                return;
+            }
+
+            // Mostrar estado de envío
+            wppForm.classList.add('submitting');
+            
+            // Simular carga
+            setTimeout(() => {
+                wppForm.classList.remove('submitting');
+                wppForm.classList.add('sent');
+                
+                if (response) {
+                    response.innerHTML = '¡Te estamos redirigiendo a WhatsApp!';
+                    response.style.display = 'flex';
+                }
+                
+                // Crear mensaje para WhatsApp
+                const message = `¡Hola! Mi nombre es *${formData.nombre}* 👋
+
+🛍️ Me interesa conocer más sobre los productos de SARA
+
+📞 *Mis datos de contacto:*
+• Teléfono: ${formData.telefono}
+• Email: ${formData.email}
+
+¡Espero tu respuesta!`;
+
+                // Redirigir a WhatsApp después de un momento
+                setTimeout(() => {
+                    const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Cerrar formulario después del redirect
+                    setTimeout(() => {
+                        wppButton.classList.remove('hide-this');
+                        wppForm.classList.remove('sent');
+                        wppForm.reset();
+                        if (response) {
+                            response.style.display = 'none';
+                            response.innerHTML = '';
+                        }
+                    }, 1000);
+                    
+                }, 1500);
+                
+            }, 2000);
+        });
+    }
+
+    // Cerrar con tecla Escape
+    document.addEventListener('keyup', function(e) {
+        if (e.key === 'Escape') {
+            wppButton.classList.remove('hide-this');
+        }
+    });
+});
