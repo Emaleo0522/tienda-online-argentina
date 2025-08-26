@@ -86,6 +86,13 @@ img { max-width: 100%; height: auto; }
 .nav-link { color: var(--dark-color); font-weight: var(--font-semi); }
     .nav-link:hover { color: var(--first-color); }
 .nav-logo { font-weight: var(--font-bold); }
+.nav-admin { 
+    font-size: 1.3rem; 
+    margin-right: var(--mb1); 
+    color: var(--dark-color-light);
+    transition: color 0.3s ease;
+}
+.nav-admin:hover { color: var(--first-color); }
 .nav-cart { font-size: 1.5rem; margin-right: var(--mb2); cursor: pointer; }
 .nav-toggle { font-size: 1.5rem; cursor: pointer; }
 .active { color: var(--first-color); }
