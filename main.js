@@ -1,13 +1,63 @@
-//Mobile Menu
+//Mobile Menu with Overlay
 
-const showMenu = (toggleId, navId) => {
+const showMenu = (toggleId, navId, overlayId) => {
     const toggle = document.getElementById(toggleId);
     const nav = document.getElementById(navId);
+    const overlay = document.getElementById(overlayId);
 
-    if(toggle && nav){ toggle.addEventListener('click', () => { nav.classList.toggle('show'); }) } 
+    if(toggle && nav && overlay) {
+        toggle.addEventListener('click', () => { 
+            nav.classList.toggle('show');
+            overlay.classList.toggle('show');
+            document.body.classList.toggle('menu-open');
+        });
+    }
 }
 
-showMenu('nav-toggle','nav-menu');
+// Función para cerrar el menú
+const closeMenu = () => {
+    const nav = document.getElementById('nav-menu');
+    const overlay = document.getElementById('nav-overlay');
+    
+    if (nav && overlay) {
+        nav.classList.remove('show');
+        overlay.classList.remove('show');
+        document.body.classList.remove('menu-open');
+    }
+}
+
+showMenu('nav-toggle','nav-menu', 'nav-overlay');
+
+// Cerrar menú al hacer click en el overlay
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('nav-overlay');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+    }
+    
+    // Cerrar menú al hacer click en el botón X (::before)
+    if (navMenu) {
+        navMenu.addEventListener('click', (e) => {
+            const rect = navMenu.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            
+            // Área aproximada del botón X (esquina superior derecha)
+            if (clickX > rect.width - 60 && clickY < 60) {
+                closeMenu();
+            }
+        });
+    }
+    
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMenu();
+        }
+    });
+});
 
 // Toggling Mobile Menu when a navlink is clicked
 
@@ -17,8 +67,8 @@ function linkAction() {
     navLink.forEach(n => n.classList.remove('active'))
     this.classList.add('active');
 
-    const navMenu = document.getElementById('nav-menu');
-    navMenu.classList.remove('show');
+    // Cerrar menú al hacer click en un enlace
+    closeMenu();
 }
 
 navLink.forEach(n => n.addEventListener('click', linkAction));
